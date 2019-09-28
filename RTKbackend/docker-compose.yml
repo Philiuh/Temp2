@@ -1,0 +1,51 @@
+version: '3'
+services:
+
+  mysql:
+    image: mysql/mysql-server:5.6
+    environment:
+      - TERM=xterm
+      - MYSQL_ROOT_PASSWORD=VW32n93N
+      - MYSQL_DATABASE=rt
+      - MYSQL_USER=rt
+      - MYSQL_PASSWORD=VW32n93N
+    volumes:
+      - 'mysql-data:/var/lib/mysql'
+    command: --character-set-server=utf8 --collation-server=utf8_bin
+    restart: always
+
+  node:
+    image: node:10.10.0-alpine
+    depends_on:
+      - mysql
+    environment:
+      - TERM=xterm
+      - NODE_ENV=production
+    volumes:
+      - ./:/app
+    expose:
+      - '3000'
+    command: sh -c 'cd /app && npm i && npm start'
+    restart: always
+
+  admin:
+    image: node:10.10.0-alpine
+    volumes:
+      - ../rt-frontend:/app
+    command: sh -c 'cd /app && npm i && npm run build'
+
+  nginx:
+    image: nginx
+    depends_on:
+      - node
+    environment:
+    - TERM=xterm
+    volumes:
+      - ../rt-frontend:/app
+      - ./nginx:/etc/nginx/conf.d
+    ports:
+      - 3000:80
+    restart: always
+    
+volumes:
+  mysql-data:

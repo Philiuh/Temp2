@@ -1,0 +1,15 @@
+version: '3'
+services:
+
+  mysql:
+    image: mysql/mysql-server:5.6
+    environment:
+      - TERM=xterm
+      - MYSQL_ROOT_PASSWORD=VW32n93N
+      - MYSQL_DATABASE=rt
+      - MYSQL_USER=rt
+      - MYSQL_PASSWORD=VW32n93N
+    command: --character-set-server=utf8 --collation-server=utf8_bin
+    ports:
+      - 3310:3306
+    restart: always

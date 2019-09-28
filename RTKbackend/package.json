@@ -1,0 +1,25 @@
+{
+  "name": "rtk-backend",
+  "version": "0.0.1",
+  "scripts": {
+    "start": "nodemon ./src/app.js",
+    "docker:up": "docker-compose -f docker-compose.dev.yml up -d",
+    "docker:clear-all": "docker ps -a --format \"{{.ID}}\" | xargs docker stop | xargs docker rm ; docker volume ls --format \"{{.Name}}\" | xargs docker volume rm ; docker network ls --format \"{{.Name}}\" | grep -v 'bridge\\|host\\|none' | xargs docker network rm"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "jsonwebtoken": "^8.4.0",
+    "ldapjs": "^1.0.2",
+    "moment": "^2.24.0",
+    "multer": "^1.4.1",
+    "mysql": "^2.16.0",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "ramda": "^0.25.0",
+    "typeorm": "^0.2.12"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.9"
+  }
+}
